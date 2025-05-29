@@ -1,3 +1,48 @@
+# Predefined Crypto Dataset
+crypto_db = {
+    "Bitcoin": {
+        "price_trend": "rising",
+        "market_cap": "high",
+        "energy_use": "high",
+        "sustainability_score": 3 / 10,
+        "description": "Bitcoin is the first cryptocurrency, known for its high market value but significant energy consumption due to proof-of-work.",
+        "long_term_rating": "high"
+    },
+    "Ethereum": {
+        "price_trend": "stable",
+        "market_cap": "high",
+        "energy_use": "medium",
+        "sustainability_score": 6 / 10,
+        "description": "Ethereum is a leading smart contract platform that has transitioned to proof-of-stake, reducing its energy use.",
+        "long_term_rating": "high"
+    },
+    "Cardano": {
+        "price_trend": "rising",
+        "market_cap": "medium",
+        "energy_use": "low",
+        "sustainability_score": 8 / 10,
+        "description": "Cardano is a research-driven blockchain focused on sustainability and peer-reviewed technology.",
+        "long_term_rating": "medium"
+    },
+    "Polkadot": {
+        "price_trend": "rising",
+        "market_cap": "medium",
+        "energy_use": "low",
+        "sustainability_score": 7 / 10,
+        "description": "Polkadot enables interoperability between blockchains and has a growing ecosystem of parachains.",
+        "long_term_rating": "medium"
+    },
+    "Solana": {
+        "price_trend": "volatile",
+        "market_cap": "medium",
+        "energy_use": "low",
+        "sustainability_score": 5 / 10,
+        "description": "Solana offers fast and low-cost transactions, but has faced outages affecting investor confidence.",
+        "long_term_rating": "medium"
+    }
+}
+
+
 def display_welcome_message():
     """
     Displays the welcome message and introduces the chatbot

@@ -76,6 +76,29 @@ def extract_crypto_name(user_input):
             return coin
     return None
 
+def give_crypto_advice(crypto_name, data):
+    """
+    Analyzes profitability and sustainability based on:
+    - Profitability = rising + high market cap
+    - Sustainability = low energy use + score > 7/10
+    """
+    profitable = data["price_trend"] == "rising" and data["market_cap"] == "high"
+    sustainable = data["energy_use"] == "low" and data["sustainability_score"] > 0.7  # score is out of 1
+
+    print(f"\nCryptoWise Advisor on {crypto_name}:\n")
+
+    if profitable and sustainable:
+        print(" This crypto is both *profitable* and *sustainable*. Great pick!")
+    elif profitable:
+        print(" This crypto looks *profitable*, but sustainability is a concern.")
+    elif sustainable:
+        print(" This crypto is *sustainable*, but may not be very profitable right now.")
+    else:
+        print(" This crypto might not be the best in terms of profitability or sustainability at the moment.")
+
+    print("\n Disclaimer: Crypto is risky—always do your own research!")
+
+
 def main():
     """
     Main function to run the chatbot
@@ -112,6 +135,10 @@ def main():
                 elif "long-term" in user_input or "investment" in user_input:
                     print(f"CryptoWise: {crypto_name} is rated {info['long_term_rating']} for long-term investment. "
                           f"Market cap: {info['market_cap']}.")
+                
+                # Check for crypto-name and profitability pair
+                elif "profitable" in user_input or "profitability" in user_input:
+                    give_crypto_advice(crypto_name, info)
                     
                 # Otherwise, just output the crypto's info
                 else:
@@ -132,6 +159,7 @@ def main():
                 print("CryptoWise: I'm still learning about that! Let me check my crypto database...")
                 print("CryptoWise: I can help you with trending cryptocurrencies, sustainability scores, or specific coins like Bitcoin or Ethereum. "
                       "Try asking about those topics!")
+                
 
 if __name__ == "__main__":
     main() 

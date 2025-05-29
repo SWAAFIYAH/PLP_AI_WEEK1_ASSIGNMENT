@@ -67,6 +67,15 @@ def get_user_input():
     """
     return input("You: ").lower().strip()
 
+def extract_crypto_name(user_input):
+    """
+    Returns the name of the crypto mentioned in the user input, or None if not found.
+    """
+    for coin in crypto_db:
+        if coin.lower() in user_input:
+            return coin
+    return None
+
 def main():
     """
     Main function to run the chatbot
@@ -80,8 +89,49 @@ def main():
             print("\nCryptoWise: Thanks for chatting! Remember to always do your own research before investing. Goodbye! 👋")
             break
             
-        # This is where the main chatbot logic will be added later
-        print("\nCryptoWise: I'm still learning about that! Let me check my crypto database...")
+        # This is where the main chatbot logic starts
+        # Get trending cryptos and list them
+        if( "trend" in user_input or "up" in user_input) and "crypto" in user_input:
+            recomment = [coin for coin, data in crypto_db.items() if data["price_trend"] == "rising"]
+            if recomment:
+                print(f"CryptoWise: The following cryptocurrencies are currently trending up: {', '.join(recomment)}")
+            else:
+                print("CryptoWise: No cryptocurrencies are currently trending up.")
+        else:
+            crypto_name = extract_crypto_name(user_input)
+
+            # Check for specific crypto name
+            if crypto_name:
+                info = crypto_db[crypto_name]
+                # Check for crypto-name and sustainability pair
+                if "sustainable" in user_input or "sustainability" in user_input:
+                    print(f"CryptoWise: {crypto_name}'s sustainability score is {info['sustainability_score']*10}/10. "
+                          f"Energy use: {info['energy_use']}.")
+                    
+                # Check for crypto-name and long-term investment pair
+                elif "long-term" in user_input or "investment" in user_input:
+                    print(f"CryptoWise: {crypto_name} is rated {info['long_term_rating']} for long-term investment. "
+                          f"Market cap: {info['market_cap']}.")
+                    
+                # Otherwise, just output the crypto's info
+                else:
+                    print(f"CryptoWise: {info['description']}")
+                    
+            # General sustainability question (no crypto name association)
+            elif "sustainable" in user_input or "sustainability" in user_input:
+                recomment = max(crypto_db, key=lambda item: crypto_db[item]["sustainability_score"])
+                print(f"CryptoWise: The most sustainable cryptocurrency is: {recomment}")
+
+            # General long-term investment question (no crypto name association)
+            elif "long-term" in user_input or "investment" in user_input:
+                recomment = max(crypto_db, key=lambda item: crypto_db[item]["long_term_rating"])
+                print(f"CryptoWise: The best cryptocurrency for long-term investment is: {recomment}")
+
+            # Default response for unrecognized input
+            else:
+                print("CryptoWise: I'm still learning about that! Let me check my crypto database...")
+                print("CryptoWise: I can help you with trending cryptocurrencies, sustainability scores, or specific coins like Bitcoin or Ethereum. "
+                      "Try asking about those topics!")
 
 if __name__ == "__main__":
     main() 
